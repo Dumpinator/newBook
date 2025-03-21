@@ -1,0 +1,288 @@
+/* Reset et style de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+body.dark-theme, .dark-theme {
+  background-color: #111;
+  color: #fff;
+}
+
+body.light-theme, .light-theme {
+  background-color: #f5f5f5;
+  color: #111;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Structure principale */
+.portfolio-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 30%;
+  padding: 2rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  left: 0;
+}
+
+.dark-theme .sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .sidebar {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo-section {
+  margin-bottom: 3rem;
+}
+
+.logo-section h1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.logo-section p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.light-theme .logo-section p {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Navigation */
+.nav-menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nav-menu ul {
+  list-style: none;
+}
+
+.nav-menu li {
+  margin-bottom: 1.5rem;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.dark-theme .nav-menu a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.light-theme .nav-menu a {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.nav-menu a.active,
+.dark-theme .nav-menu a.active {
+  color: #6366f1;
+}
+
+.light-theme .nav-menu a.active {
+  color: #4f46e5;
+}
+
+.nav-menu a:hover {
+  color: #6366f1;
+}
+
+/* Copyright */
+.copyright {
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.dark-theme .copyright {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.light-theme .copyright {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 30%;
+  width: 70%;
+  padding: 2rem;
+  padding-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.project-item {
+  margin-bottom: 6rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+  position: relative;
+}
+
+.project-item:hover {
+  transform: translateX(-10px);
+}
+
+.project-title {
+  margin-bottom: 0.5rem;
+}
+
+.project-title h2 {
+  font-size: 3.5rem;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.project-date {
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+}
+
+.dark-theme .project-date {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.light-theme .project-date {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Mode Toggle */
+.mode-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  align-items: flex-end;
+}
+
+.mode-toggle button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  text-align: right;
+  font-family: inherit;
+  transition: color 0.2s;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  margin-bottom: 1rem;
+}
+
+.dark-theme .mode-toggle button {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.light-theme .mode-toggle button {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.dark-theme .mode-toggle button:hover,
+.dark-theme .mode-toggle button.active {
+  color: rgba(255, 255, 255, 1);
+}
+
+.light-theme .mode-toggle button:hover,
+.light-theme .mode-toggle button.active {
+  color: rgba(0, 0, 0, 1);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 25%;
+  }
+  
+  .main-content {
+    margin-left: 25%;
+    width: 75%;
+  }
+  
+  .project-title h2 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 50vh;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .dark-theme .sidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .light-theme .sidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 2rem;
+    min-height: auto;
+  }
+  
+  .project-title h2 {
+    font-size: 2.5rem;
+  }
+  
+  .mode-toggle {
+    position: static;
+    flex-direction: row;
+    margin-top: 2rem;
+    float: right;
+  }
+  
+  .mode-toggle button {
+    writing-mode: horizontal-tb;
+    transform: none;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+}
