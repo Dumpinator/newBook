@@ -10,10 +10,10 @@ function App() {
   
   return (
     <div className={`portfolio-container ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-      <div className="sidebar">
+      <div className="sidebar bg-red-400">
         <div className="logo-section">
-          <h1>Keita Yamada</h1>
-          <p>Designer & Developer</p>
+          <h1>Jonathan de BOISVILLIERS</h1>
+          <p>Developer Fullstack JavaScript</p>
         </div>
         
         <nav className="nav-menu">
@@ -31,7 +31,7 @@ function App() {
         </div>
       </div>
       
-      <div className="main-content">
+      <div className="main-content bg-blue-400">
         <div className="project-item">
           <div className="project-title">
             <h2>Shogo</h2>
