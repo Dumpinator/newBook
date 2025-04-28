@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import ProjectItem from './folder/Folder';
+import ParticleBackground from './particulesBackground/ParticleBackground .tsx';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [activeProjectId, setActiveProjectId] = useState(null);
   const [showFocusIndicator, setShowFocusIndicator] = useState(false);
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const focusIndicatorRef = useRef(null);
 
   const projects = [
@@ -51,15 +52,15 @@ function App() {
       const containerRect = scrollContainerRef.current.getBoundingClientRect();
       const containerCenter = containerRect.top + containerRect.height / 2;
 
-      let closestId = null;
+      let closestId: number | null = null;
       let closestDistance = Infinity;
-      const projectsVisibility = {};
+      const projectsVisibility: Record<number, { distance: number; element: Element }> = {};
 
       const projectElements = scrollContainerRef.current.querySelectorAll('.project-item');
       projectElements.forEach(element => {
         const rect = element.getBoundingClientRect();
         const distance = Math.abs(rect.top + rect.height / 2 - containerCenter);
-        const id = parseInt(element.dataset.id);
+        const id = parseInt((element as HTMLElement).dataset.id || '0');
 
         projectsVisibility[id] = { distance, element };
 
@@ -76,16 +77,16 @@ function App() {
 
         if (numId === closestId) {
           // Projet actif - 100% d'opacité
-          element.style.opacity = "1";
-          element.style.pointerEvents = "auto";
-        } else if (numId === closestId - 1 || numId === closestId + 1) {
+          (element as HTMLElement).style.opacity = "1";
+          (element as HTMLElement).style.pointerEvents = "auto";
+        } else if (closestId !== null && (numId === closestId - 1 || numId === closestId + 1)) {
           // Projets adjacents - 50% d'opacité
-          element.style.opacity = "0.5";
-          element.style.pointerEvents = "auto";
+          (element as HTMLElement).style.opacity = "0.5";
+          (element as HTMLElement).style.pointerEvents = "auto";
         } else {
           // Tous les autres projets - invisibles et non interactifs
-          element.style.opacity = "0";
-          element.style.pointerEvents = "none";
+          (element as HTMLElement).style.opacity = "0";
+          (element as HTMLElement).style.pointerEvents = "none";
         }
       });
     };
@@ -103,7 +104,7 @@ function App() {
     };
   }, []);
 
-  const scrollToProject = (id) => {
+  const scrollToProject = (id: number) => {
     const element = document.querySelector(`.project-item[data-id="${id}"]`);
     if (element && scrollContainerRef.current) {
       const containerRect = scrollContainerRef.current.getBoundingClientRect();
@@ -161,7 +162,7 @@ function App() {
         </div>
       </div>
 
-      <div className={`w-full ml-[30%] flex flex-col p-4 items-end bg-amber-950`}>
+      <div className={`w-full ml-[30%] flex flex-col p-4 items-end`}>
         {/* Indicateurs visuels pour les zones d'entrée/sortie */}
         <div className="w-full flex flex-col relative h-[96vh]">
           <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none"></div>
@@ -237,6 +238,7 @@ function App() {
           LIGHT
         </button>
       </div>
+      <ParticleBackground darkMode={darkMode} />
     </div>
   )
 }

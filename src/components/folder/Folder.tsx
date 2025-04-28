@@ -14,7 +14,9 @@ type ProjectProps = {
   darkMode?: boolean;
   isActive: boolean;
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
-  scrollToProject: (projectId: string | number) => void;
+  scrollToProject: (projectId: number) => void;
+  scrollContainerRef?: React.RefObject<HTMLDivElement>;
+  showFocusIndicator?: boolean;
   className?: string;
 }
 
@@ -36,7 +38,7 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
     // Si ce n'est pas le projet actif, configurer le timer pour le défilement automatique
     else {
       autoScrollTimerRef.current = window.setTimeout(() => {
-        scrollToProject(project?.id);
+        scrollToProject(Number(project?.id));
       }, 800);
     }
   };
