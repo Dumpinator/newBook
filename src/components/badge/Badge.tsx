@@ -4,12 +4,13 @@ type BadgeProps = {
   children: React.ReactNode;
   className?: string;
   darkMode?: boolean;
+  isActive?: boolean;
 }
 
 const Badge: React.FC<BadgeProps> = ({
   children,
   className = '',
-  darkMode = true
+  darkMode = true,
 }) => {
 
 
