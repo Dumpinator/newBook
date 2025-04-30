@@ -172,9 +172,9 @@ function App() {
 
             <div className="text-center sm:text-left">
               <h1 className="text-4xl font-bold tracking-tighter mb-1">
-                <span className={`${darkMode ? 'text-green-400' : 'text-green-600'}`}>JONATHAN</span>
+                <span className={`${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>JONATHAN</span>
                 <br />
-                <span className="text-white">de BOISVILLIERS</span>
+                <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}>de BOISVILLIERS</span>
               </h1>
 
               <p className={`text-xl font-medium ${darkMode ? 'text-white/80' : 'text-black/80'}`}>
@@ -183,23 +183,33 @@ function App() {
             </div>
           </div>
 
-          <p className="text-base mb-8 opacity-75 max-w-md text-center sm:text-left">
-            Plus de 3 ans d'expérience dans la création de solutions web
-            performantes, évolutives et réactives.
-          </p>
+          <div className="text-base mb-8 opacity-75 max-w-md text-center sm:text-left">
+            <p className="mb-4">
+              Fullstack JS developer with 5+ years of experience, combining technical expertise and creative approach to design performant and intuitive interfaces:
+            </p>
+            <ul className="list-disc pl-5 mb-4 space-y-2">
+              <li>Deep mastery of React ecosystems, particularly in state management (Zustand) and data flow optimization (GraphQL)</li>
+              <li>Proficiency in data visualization (D3.JS, Chart.JS), transforming complex information into readable interfaces</li>
+              <li>UI/UX expertise with modern frameworks (Tailwind, Radix-UI, Chakra-UI, MUI) ensuring accessibility and polished aesthetics</li>
+              <li>Solid fullstack skills (Node, TypeScript) complemented by automation tools (Puppeteer) and continuous integration</li>
+            </ul>
+            <p>
+              I strive to create responsive applications that combine technical performance with intuitive user experience.
+            </p>
+          </div>
 
           {/* Stats avec flex-wrap */}
           <div className="flex flex-wrap justify-center sm:justify-start gap-8 sm:gap-12 mb-8">
             <div className="text-center sm:text-left">
-              <p className={`text-4xl font-bold ${darkMode ? 'text-green-400' : 'text-green-600'}`}>5+</p>
+              <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>5+</p>
               <p className="text-sm opacity-75">Years of Experience</p>
             </div>
             <div className="text-center sm:text-left">
-              <p className={`text-4xl font-bold ${darkMode ? 'text-green-400' : 'text-green-600'}`}>12+</p>
+              <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>12+</p>
               <p className="text-sm opacity-75">Completed Projects</p>
             </div>
             <div className="text-center sm:text-left">
-              <p className={`text-4xl font-bold ${darkMode ? 'text-green-400' : 'text-green-600'}`}>10k+</p>
+              <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>10k+</p>
               <p className="text-sm opacity-75">Downed Coffees</p>
             </div>
           </div>
