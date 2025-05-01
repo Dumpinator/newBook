@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Badge from '../badge/Badge';
+import gsap from 'gsap';
 
 type Project = {
   id: string | number;
@@ -26,6 +27,7 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
   const timerRef = useRef<number | null>(null);
   const autoScrollTimerRef = useRef<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const projectRef = useRef<HTMLDivElement>(null);
   
   // Détecter si c'est un écran mobile
   useEffect(() => {
@@ -40,10 +42,51 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
       window.removeEventListener('resize', checkIfMobile);
     };
   }, []);
-  
+
+  // Animation GSAP initiale 
+  useEffect(() => {
+    if (projectRef.current) {
+      // Animation initiale - seul le premier projet est pleinement visible
+      gsap.set(projectRef.current, { 
+        opacity: project.id === 1 ? 1 : 0.15,
+        scale: project.id === 1 ? 1 : 0.95,
+        clearProps: "transform" // Permet à nos classes CSS de définir la transformation
+      });
+    }
+  }, [project.id]);
+
+  // Animation GSAP quand le statut actif change
+  useEffect(() => {
+    if (projectRef.current) {
+      if (isActive) {
+        gsap.to(projectRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      } else {
+        // Si on est sur mobile, on garde toujours une certaine visibilité
+        gsap.to(projectRef.current, {
+          opacity: isMobile ? 0.5 : 0.15,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      }
+    }
+  }, [isActive, isMobile]);
+
   // Gérer le hover et les timers
   const handleMouseEnter = () => {
     setHovered(true);
+    
+    // Animation au survol
+    if (projectRef.current && !isActive) {
+      gsap.to(projectRef.current, {
+        opacity: 0.8,
+        duration: 0.3,
+        ease: "power1.out"
+      });
+    }
     
     // Sur mobile, ne pas utiliser de délais
     if (isMobile) {
@@ -63,9 +106,18 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
       }, 800);
     }
   };
-  
+
   const handleMouseLeave = () => {
     setHovered(false);
+    
+    // Animation quand on quitte le survol
+    if (projectRef.current && !isActive) {
+      gsap.to(projectRef.current, {
+        opacity: isMobile ? 0.5 : 0.15,
+        duration: 0.3,
+        ease: "power1.out"
+      });
+    }
     
     // Sur mobile, garder les détails visibles pour le projet actif
     if (isMobile && isActive) {
@@ -81,7 +133,7 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
       clearTimeout(autoScrollTimerRef.current);
     }
   };
-  
+
   // Montrer les détails automatiquement pour le projet actif en mode mobile
   useEffect(() => {
     if (isMobile && isActive) {
@@ -90,17 +142,18 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
       setShowDetails(false);
     }
   }, [isMobile, isActive]);
-  
+
   if (!project) {
     return null;
   }
-  
+
   return (
     <div
+      ref={projectRef}
       data-id={project.id}
-      className={`project-item w-fit mx-auto ${isMobile ? 'mb-8' : 'mb-16'} cursor-pointer snap-center transition-all duration-500 
-        ${(hovered && isActive && !isMobile) ? '-translate-x-2.5' : ''} 
-        ${isActive ? `${isMobile ? 'scale-100' : 'scale-105'}` : `${isMobile ? 'opacity-80' : 'scale-95'}`}
+      className={`project-item w-fit mx-auto ${isMobile ? 'mb-8' : 'mb-16'} cursor-pointer snap-center transition-all duration-500
+        ${(hovered && isActive && !isMobile) ? '-translate-x-2.5' : ''}
+        ${isActive ? `${isMobile ? 'scale-100' : 'scale-105'}` : `${isMobile ? '' : 'scale-95'}`}
       `}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -124,7 +177,7 @@ const ProjectItem: React.FC<ProjectProps> = ({ project, darkMode, isActive, onCl
         </ul>
       </div>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-out 
+        className={`overflow-hidden transition-all duration-300 ease-out
           ${(showDetails && isActive) || (isMobile && isActive) ? 'max-h-32 opacity-100 mt-2' : 'max-h-0 opacity-0'}
         `}
       >

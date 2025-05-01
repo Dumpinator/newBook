@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import ProjectItem from './folder/Folder';
-import ParticleBackground from './particulesBackground/ParticleBackground .tsx';
+import ParticleBackground from './particulesBackground/ParticleBackground.tsx';
+import gsap from 'gsap';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [activeProjectId, setActiveProjectId] = useState<number | null>(null);
   const [showFocusIndicator, setShowFocusIndicator] = useState(false);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const focusIndicatorRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const initialScrollComplete = useRef(false);
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -66,7 +69,8 @@ function App() {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
 
-      const containerRect = scrollContainerRef.current.getBoundingClientRect();
+      const containerRect = scrollContainerRef.current?.getBoundingClientRect();
+      if (!containerRect) return;
       const containerCenter = containerRect.top + containerRect.height / 2;
 
       let closestId: number | null = null;
@@ -124,6 +128,44 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!initialScrollComplete.current && scrollContainerRef.current && !isMobile) {
+      // Petit délai pour s'assurer que le DOM est complètement chargé
+      setTimeout(() => {
+        // Trouver l'élément FASST
+        const fasstProject = document.querySelector('.project-item[data-id="1"]');
+
+        if (fasstProject) {
+          // Calcul de la position de défilement
+          const containerRect = scrollContainerRef.current?.getBoundingClientRect();
+          if (!containerRect) return;
+          const elementRect = fasstProject.getBoundingClientRect();
+
+          const scrollTop = (scrollContainerRef.current?.scrollTop || 0) + elementRect.top -
+            containerRect.top - (containerRect.height / 2) + (elementRect.height / 2);
+
+          // Animation fluide avec GSAP
+          gsap.to(scrollContainerRef.current, {
+            scrollTop: scrollTop,
+            duration: 1,
+            ease: "power2.out",
+            onComplete: () => {
+              // Marquer comme terminé pour ne pas répéter
+              initialScrollComplete.current = true;
+              // Mettre à jour le projet actif
+              setActiveProjectId(1);
+              // Afficher l'indicateur de focus
+              setShowFocusIndicator(true);
+              setTimeout(() => {
+                setShowFocusIndicator(false);
+              }, 1000);
+            }
+          });
+        }
+      }, 300);
+    }
+  }, [isMobile]);
+
   const scrollToProject = (id: number) => {
 
     if (isMobile) {
@@ -158,8 +200,8 @@ function App() {
   return (
     <div className={`flex flex-col md:flex-row min-h-[100vh] w-full relative ${darkMode ? 'dark-theme' : 'light-theme'}`}>
       {/* Section gauche - Présentation */}
-      <div className="w-full md:w-1/2 h-screen flex items-center">
-        <div className="flex flex-col w-full px-6 sm:px-12">
+      <div className="w-fit md:w-1/2 h-screen flex items-center justify-end relative">
+        <div className="flex flex-col w-fit px-6 sm:px-12">
           {/* Section photo + texte avec responsive */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-8">
             <div className="rounded-full overflow-hidden w-24 h-24 border-2 border-blue-300/50 shadow-lg flex-shrink-0 mb-4 sm:mb-0">
@@ -183,7 +225,7 @@ function App() {
             </div>
           </div>
 
-          <div className="text-base mb-8 opacity-75 max-w-md text-center sm:text-left">
+          <div className="text-base mb-8 opacity-75 max-w-md mx-auto sm:mx-0 text-left">
             <p className="mb-4">
               Fullstack JS developer with 5+ years of experience, combining technical expertise and creative approach to design performant and intuitive interfaces:
             </p>
@@ -281,35 +323,43 @@ function App() {
       </div>
 
       {/* Boutons de thème */}
-      <div className="flex flex-col text-xs items-end fixed bottom-8 right-8 z-20">
+      <div className="flex flex-col text-xs items-end fixed bottom-8 right-8 z-50">
         <button
-          className={`${!darkMode ? 'text-black/40 hover:text-black' : 'text-white/40 hover:text-white'} 
+          className={`
             bg-none border-none 
             cursor-pointer 
             !py-[0.3rem] !px-0 
             text-right 
             font-inherit 
-            transition-colors duration-200 
+            transition-all duration-200 
             [writing-mode:vertical-lr]
             rotate-180 
             !mb-4
-          `}
+            ${darkMode
+              ? 'text-white/80 font-medium scale-105' // Style pour thème actif (dark) - avec 80% d'opacité
+              : 'text-white/40 hover:text-white'      // Style pour thème inactif
+            }
+            `}
           onClick={() => setDarkMode(true)}
         >
           DARK
         </button>
         <button
-          className={`${!darkMode ? 'text-black/40 hover:text-black' : 'text-white/40 hover:text-white'} 
-            bg-none border-none 
-            cursor-pointer 
-            !py-[0.3rem] !px-0 
-            text-right 
-            font-inherit 
-            transition-colors duration-200 
-            [writing-mode:vertical-lr]
-            rotate-180 
-            !mb-4
-          `}
+          className={`
+      bg-none border-none 
+      cursor-pointer 
+      !py-[0.3rem] !px-0 
+      text-right 
+      font-inherit 
+      transition-all duration-200 
+      [writing-mode:vertical-lr]
+      rotate-180 
+      !mb-4
+      ${!darkMode
+              ? 'text-black/80 font-medium scale-105' // Style pour thème actif (light) - avec 80% d'opacité
+              : 'text-white/40 hover:text-white'      // Style pour thème inactif
+            }
+    `}
           onClick={() => setDarkMode(false)}
         >
           LIGHT
