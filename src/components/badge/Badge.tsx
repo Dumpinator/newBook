@@ -13,7 +13,6 @@ const Badge: React.FC<BadgeProps> = ({
   darkMode = true,
 }) => {
 
-
   const textColorMatch = className.match(/text-(\w+)-(\d+)/);
   const color = textColorMatch && textColorMatch[1]
   const textColorClass = textColorMatch && textColorMatch[0]

@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import './App.css';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import ProjectItem from './folder/Folder';
-import ParticleBackground from './particulesBackground/ParticleBackground.tsx';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
+import SplitText from "./animations/SplitText.tsx";
+import './App.css';
+const ParticleBackground = lazy(() => import('./particulesBackground/ParticleBackground.tsx'));
+import FuzzyText from './animations/FuzzyText.tsx';
+import DecryptedText from './animations/DecryptedText.tsx';
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -36,14 +40,14 @@ function App() {
       title: ["FASST"],
       date: "Oct 2024 - Mars 2025",
       info: 'Sales path and Dashboard for AMUNDI distributors',
-      stack: ['React', 'Node', 'GraphQL', 'Ramda', 'Tailwind', 'Radix-UI', 'Gitlab']
+      stack: ['React', 'Node', 'GraphQL', 'Ramda', 'Tailwind', 'Radix-UI', 'GitLab']
     },
     {
       id: 2,
       title: ["PATHFINDER"],
       date: "Jun - Nov 2024",
       info: 'Graph Visualization Tool for BNP Paribas',
-      stack: ['React', 'React Router', 'D3.JS', 'TypeScript', 'Vite', 'Zustand', 'Gitlab']
+      stack: ['React', 'React Router', 'D3.JS', 'TypeScript', 'Vite', 'Zustand', 'GitLab']
     },
     {
       id: 3,
@@ -57,7 +61,7 @@ function App() {
       title: ["ABLA"],
       date: " Mar 2023 - Dec 2024",
       info: 'AI transcription for repository Design',
-      stack: ['React', 'React-DnD', 'Chart.JS', 'Chakra-UI', 'Github']
+      stack: ['React', 'React-DnD', 'Chart.JS', 'Chakra-UI', 'GitHub']
     }
   ];
 
@@ -213,44 +217,106 @@ function App() {
             </div>
 
             <div className="text-center sm:text-left">
-              <h1 className="text-4xl font-bold tracking-tighter mb-1">
-                <span className={`${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>JONATHAN</span>
+              <h1 className="text-4xl font-bold tracking-tighter mb-2 pl-2">
+                <span className={`${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>
+                  <SplitText
+                    text="JONATHAN"
+                    delay={100}
+                    animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+                    animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                    easing={gsap.parseEase("easeOutCubic")}
+                    threshold={0.2}
+                    rootMargin="-50px"
+                  />
+                </span>
                 <br />
-                <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}>de BOISVILLIERS</span>
+                <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}>
+                  <SplitText
+                    text="DE BOISVILLIERS"
+                    delay={200}
+                    animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+                    animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                    easing={gsap.parseEase("easeOutCubic")}
+                    threshold={0.2}
+                    rootMargin="-50px"
+                  />
+                </span>
               </h1>
-
-              <p className={`text-xl font-medium ${darkMode ? 'text-white/80' : 'text-black/80'}`}>
-                Developer Fullstack JavaScript
-              </p>
+              <div className='flex flex-wrap items-center'>
+                <FuzzyText
+                  baseIntensity={0.1}
+                  fontSize="2rem"
+                >
+                  FullStack JS
+                </FuzzyText>
+                <FuzzyText
+                  baseIntensity={0.1}
+                  fontSize="2rem"
+                >
+                  Developer
+                </FuzzyText>
+              </div>
             </div>
           </div>
 
           <div className="text-base mb-8 opacity-75 max-w-md mx-auto sm:mx-0 text-left">
             <p className="mb-4">
-              Fullstack JS developer with 5+ years of experience, combining technical expertise and creative approach to design performant and intuitive interfaces:
+              <DecryptedText
+                text="Fullstack JS developer with 5+ years of experience, combining technical expertise and creative approach to design performant and intuitive interfaces:"
+                duration={2000}
+                direction="left-to-right"
+              />
             </p>
             <ul className="list-disc pl-5 mb-4 space-y-2">
-              <li>Deep mastery of React ecosystems, particularly in state management (Zustand) and data flow optimization (GraphQL)</li>
-              <li>Proficiency in data visualization (D3.JS, Chart.JS), transforming complex information into readable interfaces</li>
-              <li>UI/UX expertise with modern frameworks (Tailwind, Radix-UI, Chakra-UI, MUI) ensuring accessibility and polished aesthetics</li>
-              <li>Solid fullstack skills (Node, TypeScript) complemented by automation tools (Puppeteer) and continuous integration</li>
+              <li>
+                <DecryptedText
+                  text="Deep mastery of React ecosystems, particularly in state management (Zustand) and data flow optimization (GraphQL)"
+                  duration={2000}
+                  direction="left-to-right"
+                />
+              </li>
+              <li>
+                <DecryptedText
+                  text="Proficiency in data visualization (D3.JS, Chart.JS), transforming complex information into readable interfaces"
+                  duration={2000}
+                  direction="left-to-right"
+                />
+              </li>
+              <li>
+                <DecryptedText
+                  text="UI/UX expertise with modern frameworks (Tailwind, Radix-UI, Chakra-UI, MUI) ensuring accessibility and polished aesthetics"
+                  duration={2000}
+                  direction="left-to-right"
+                />
+              </li>
+              <li>
+                <DecryptedText
+                  text="Solid fullstack skills (Node, TypeScript) complemented by automation tools (Puppeteer) and continuous integration"
+                  duration={2000}
+                  direction="left-to-right"
+                />
+              </li>
             </ul>
             <p>
-              I strive to create responsive applications that combine technical performance with intuitive user experience.
+              <DecryptedText
+                text="I strive to create responsive applications that combine technical performance with intuitive user experience."
+                duration={2000}
+                direction="left-to-right"
+              />
             </p>
           </div>
 
           {/* Stats avec flex-wrap */}
-          <div className="flex flex-wrap justify-center sm:justify-start gap-8 sm:gap-12 mb-8">
-            <div className="text-center sm:text-left">
+          <div className="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 w-fit space-y-4 sm:space-y-8">
+            <div className="flex-1 text-center sm:text-left">
               <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>5+</p>
               <p className="text-sm opacity-75">Years of Experience</p>
             </div>
-            <div className="text-center sm:text-left">
+            <div className="flex-1 text-center sm:text-left">
               <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>12+</p>
               <p className="text-sm opacity-75">Completed Projects</p>
             </div>
-            <div className="text-center sm:text-left">
+            <div className="flex-1 text-center sm:text-left">
               <p className={`text-4xl font-bold ${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>10k+</p>
               <p className="text-sm opacity-75">Downed Coffees</p>
             </div>
@@ -262,7 +328,7 @@ function App() {
       <div className="w-full md:w-1/2 h-screen relative">
         {/* Sur mobile: Vue de tous les projets sans défilement, avec un simple padding */}
         {isMobile ? (
-          <div className="w-full py-8 px-4 flex flex-col gap-12">
+          <div className="w-full py-8 px-4 mt-8 flex flex-col gap-12">
             {projects.map(project => (
               <ProjectItem
                 key={project.id}
@@ -320,52 +386,61 @@ function App() {
       {/* Copyright flottant */}
       <div className="fixed bottom-8 left-8 text-xs opacity-60 z-20">
         © Jonathan
+        <br />
+        de BOISVILLIERS
       </div>
 
-      {/* Boutons de thème */}
-      <div className="flex flex-col text-xs items-end fixed bottom-8 right-8 z-50">
-        <button
-          className={`
-            bg-none border-none 
-            cursor-pointer 
-            !py-[0.3rem] !px-0 
-            text-right 
-            font-inherit 
-            transition-all duration-200 
-            [writing-mode:vertical-lr]
-            rotate-180 
-            !mb-4
-            ${darkMode
-              ? 'text-white/80 font-medium scale-105' // Style pour thème actif (dark) - avec 80% d'opacité
-              : 'text-white/40 hover:text-white'      // Style pour thème inactif
-            }
-            `}
+      {/* Version améliorée avec effet de hover par lettre */}
+      <div className="flex flex-col text-xs items-end fixed bottom-8 right-8 z-50 gap-6">
+        {/* Bouton DARK */}
+        <div
+          className={`flex flex-col items-center cursor-pointer ${darkMode ? 'opacity-100' : 'opacity-40'}`}
           onClick={() => setDarkMode(true)}
         >
-          DARK
-        </button>
-        <button
-          className={`
-      bg-none border-none 
-      cursor-pointer 
-      !py-[0.3rem] !px-0 
-      text-right 
-      font-inherit 
-      transition-all duration-200 
-      [writing-mode:vertical-lr]
-      rotate-180 
-      !mb-4
-      ${!darkMode
-              ? 'text-black/80 font-medium scale-105' // Style pour thème actif (light) - avec 80% d'opacité
-              : 'text-white/40 hover:text-white'      // Style pour thème inactif
-            }
-    `}
+          {'DARK'.split('').map((letter, index) => (
+            <div
+              key={`dark-${index}`}
+              className="my-1 hover:scale-110 transition-transform"
+            >
+              <FuzzyText
+                baseIntensity={darkMode ? 0.15 : 0.1}
+                hoverIntensity={0.25}
+                fontSize="1rem"
+                color={darkMode ? '#fff' : '#aaa'}
+                enableHover={true}
+              >
+                {letter}
+              </FuzzyText>
+            </div>
+          ))}
+        </div>
+
+        {/* Bouton LIGHT */}
+        <div
+          className={`flex flex-col items-center cursor-pointer ${!darkMode ? 'opacity-100' : 'opacity-40'}`}
           onClick={() => setDarkMode(false)}
         >
-          LIGHT
-        </button>
+          {'LIGHT'.split('').map((letter, index) => (
+            <div
+              key={`light-${index}`}
+              className="my-1 hover:scale-110 transition-transform"
+            >
+              <FuzzyText
+                baseIntensity={!darkMode ? 0.15 : 0.1}
+                hoverIntensity={0.25}
+                fontSize="1rem"
+                color={!darkMode ? '#000' : '#aaa'}
+                enableHover={true}
+              >
+                {letter}
+              </FuzzyText>
+            </div>
+          ))}
+        </div>
       </div>
-      <ParticleBackground darkMode={darkMode} />
+      <Suspense fallback={<div className="fixed inset-0 z-0"></div>}>
+        <ParticleBackground darkMode={darkMode} />
+      </Suspense>
     </div>
   )
 }

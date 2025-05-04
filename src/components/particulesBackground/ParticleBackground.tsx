@@ -1,4 +1,4 @@
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { useRef, useEffect } from 'react';
 
 type ParticleBackgroundProps = {
@@ -17,9 +17,9 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ darkMode }) => 
         const mainTl = gsap.timeline();
 
         // Masquer initialement toutes les particules
-        gsap.set(particles, { 
+        gsap.set(particles, {
             opacity: 0,
-            visibility: "hidden" 
+            visibility: "hidden"
         });
 
         particles.forEach((particle, index) => {
@@ -44,7 +44,7 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ darkMode }) => 
             // Phase 2: Animation de chute
             particleTl.to(particle, {
                 y: window.innerHeight,
-                duration: Math.random() * 10 + 10, 
+                duration: Math.random() * 10 + 10,
                 opacity: 0,
                 repeat: -1,
                 ease: 'none',
@@ -82,9 +82,8 @@ const ParticleBackground: React.FC<ParticleBackgroundProps> = ({ darkMode }) => 
             {[...Array(100)].map((_, i) => (
                 <div
                     key={i}
-                    className={`particle absolute mix-blend-screen pointer-events-none ${
-                        darkMode ? 'bg-blue-300' : 'bg-yellow-950'
-                    }`}
+                    className={`particle absolute mix-blend-screen pointer-events-none ${darkMode ? 'bg-blue-300' : 'bg-yellow-950'
+                        }`}
                     style={{ opacity: 0 }}
                 />
             ))}
