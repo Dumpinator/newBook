@@ -2,11 +2,11 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import ProjectItem from './folder/Folder';
 import { gsap } from 'gsap';
 import SplitText from "./animations/SplitText.tsx";
-import './App.css';
-const ParticleBackground = lazy(() => import('./particulesBackground/ParticleBackground.tsx'));
 import FuzzyText from './animations/FuzzyText.tsx';
 import DecryptedText from './animations/DecryptedText.tsx';
-
+import profilImage from '/profil.jpg'
+import './App.css';
+const ParticleBackground = lazy(() => import('./particulesBackground/ParticleBackground.tsx'));
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -202,15 +202,19 @@ function App() {
   };
 
   return (
-    <div className={`flex flex-col md:flex-row min-h-[100vh] w-full relative ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+    <div className={`flex flex-col md:flex-row min-h-[100vh] w-full  ${darkMode ? 'dark-theme' : 'light-theme'}`}>
       {/* Section gauche - Présentation */}
-      <div className="w-fit md:w-1/2 h-screen flex items-center justify-end relative">
-        <div className="flex flex-col w-fit px-6 sm:px-12">
+      <div className="w-full md:w-1/2 min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="flex flex-col w-full max-w-md px-4 sm:px-6 py-8 space-y-6">
           {/* Section photo + texte avec responsive */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-8">
-            <div className="rounded-full overflow-hidden w-24 h-24 border-2 border-blue-300/50 shadow-lg flex-shrink-0 mb-4 sm:mb-0">
+            <div className={`rounded-full overflow-hidden w-24 h-24 border-2 ${ darkMode ? 'border-green-300/80' : 'border-blue-400/50'} shadow-lg flex-shrink-0 mb-4 sm:mb-0`}>
               <img
-                src="/profil.jpg"
+                src={profilImage}
+                srcSet={`${profilImage} 2x`}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
+                decoding="async"
                 alt="Jonathan de BOISVILLIERS"
                 className="w-full h-full object-cover scale-x-[-1]"
               />
@@ -218,7 +222,7 @@ function App() {
 
             <div className="text-center sm:text-left">
               <h1 className="text-4xl font-bold tracking-tighter mb-2 pl-2">
-                <span className={`${darkMode ? 'text-green-300/80' : 'text-blue-400/50'}`}>
+                {/* <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}> */}
                   <SplitText
                     text="JONATHAN"
                     delay={100}
@@ -227,10 +231,11 @@ function App() {
                     easing={gsap.parseEase("easeOutCubic")}
                     threshold={0.2}
                     rootMargin="-50px"
+                    className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
                   />
-                </span>
+                {/* </span> */}
                 <br />
-                <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}>
+                {/* <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}> */}
                   <SplitText
                     text="DE BOISVILLIERS"
                     delay={200}
@@ -239,19 +244,22 @@ function App() {
                     easing={gsap.parseEase("easeOutCubic")}
                     threshold={0.2}
                     rootMargin="-50px"
+                    className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
                   />
-                </span>
+                {/* </span> */}
               </h1>
               <div className='flex flex-wrap items-center'>
                 <FuzzyText
                   baseIntensity={0.1}
                   fontSize="2rem"
+                  color={darkMode ? '#fff' : '#aaa'}
                 >
                   FullStack JS
                 </FuzzyText>
                 <FuzzyText
                   baseIntensity={0.1}
                   fontSize="2rem"
+                  color={darkMode ? '#fff' : '#aaa'}
                 >
                   Developer
                 </FuzzyText>
