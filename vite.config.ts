@@ -4,9 +4,9 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/portfolio/', // Assurez-vous que c'est correct
+  base: '/portfolio/',
   publicDir: 'public',
   build: {
-    assetsDir: '' // Cela peut aider avec les chemins des assets
+    assetsDir: ''
   }
 })

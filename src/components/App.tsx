@@ -6,6 +6,7 @@ import FuzzyText from './animations/FuzzyText.tsx';
 import DecryptedText from './animations/DecryptedText.tsx';
 import profilImage from '/profil.jpg'
 import './App.css';
+import SocialIcons from './socialIcons/SocialIcons.tsx';
 const ParticleBackground = lazy(() => import('./particulesBackground/ParticleBackground.tsx'));
 
 function App() {
@@ -202,51 +203,53 @@ function App() {
   };
 
   return (
-    <div className={`flex flex-col md:flex-row min-h-[100vh] w-full  ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+    <div className={`flex flex-col md:flex-row min-h-[100vh] w-full overflow-hidden  ${darkMode ? 'dark-theme' : 'light-theme'}`}>
       {/* Section gauche - Présentation */}
       <div className="w-full md:w-1/2 min-h-screen flex items-center justify-center overflow-hidden">
         <div className="flex flex-col w-full max-w-md px-4 sm:px-6 py-8 space-y-6">
           {/* Section photo + texte avec responsive */}
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-8">
-            <div className={`rounded-full overflow-hidden w-24 h-24 border-2 ${ darkMode ? 'border-green-300/80' : 'border-blue-400/50'} shadow-lg flex-shrink-0 mb-4 sm:mb-0`}>
-              <img
-                src={profilImage}
-                srcSet={`${profilImage} 2x`}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                loading="lazy"
-                decoding="async"
-                alt="Jonathan de BOISVILLIERS"
-                className="w-full h-full object-cover scale-x-[-1]"
-              />
+          <div className="flex flex-col items-center sm:flex-row sm:items-start mb-8">
+            <div className="flex flex-col items-center sm:items-start mr-2.5">
+              {/* Image de profil */}
+              <div className={`rounded-full overflow-hidden w-24 h-24 border-2 ${darkMode ? 'border-green-300/80' : 'border-blue-400/50'} shadow-lg flex-shrink-0 mb-4 sm:mb-0`}>
+                <img
+                  src={profilImage}
+                  srcSet={`${profilImage} 2x`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Jonathan de BOISVILLIERS"
+                  className="w-full h-full object-cover scale-x-[-1]"
+                />
+              </div>
+              <div className="w-fit h-12 flex items-center justify-center">
+                <SocialIcons darkMode={darkMode} />
+              </div>
             </div>
 
             <div className="text-center sm:text-left">
               <h1 className="text-4xl font-bold tracking-tighter mb-2 pl-2">
-                {/* <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}> */}
-                  <SplitText
-                    text="JONATHAN"
-                    delay={100}
-                    animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-                    animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-                    easing={gsap.parseEase("easeOutCubic")}
-                    threshold={0.2}
-                    rootMargin="-50px"
-                    className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
-                  />
-                {/* </span> */}
+                <SplitText
+                  text="JONATHAN"
+                  delay={100}
+                  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+                  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                  easing={gsap.parseEase("easeOutCubic")}
+                  threshold={0.2}
+                  rootMargin="-50px"
+                  className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
+                />
                 <br />
-                {/* <span className={`${darkMode ? 'text-white/90' : 'text-black-400/50'}`}> */}
-                  <SplitText
-                    text="DE BOISVILLIERS"
-                    delay={200}
-                    animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
-                    animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
-                    easing={gsap.parseEase("easeOutCubic")}
-                    threshold={0.2}
-                    rootMargin="-50px"
-                    className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
-                  />
-                {/* </span> */}
+                <SplitText
+                  text="DE BOISVILLIERS"
+                  delay={200}
+                  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+                  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+                  easing={gsap.parseEase("easeOutCubic")}
+                  threshold={0.2}
+                  rootMargin="-50px"
+                  className={darkMode ? 'text-green-300/80' : 'text-blue-400/50'}
+                />
               </h1>
               <div className='flex flex-wrap items-center'>
                 <FuzzyText
